@@ -1,0 +1,18 @@
+@import "./lib/bootstrap/bootstrap.css";
+@import "./font/md-icons.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+
+/*bootstrap customizations*/
+.has-danger .form-control-feedback {
+  color: #dc3545;
+}
+
+.has-danger .form-control {
+  border-color: #dc3545;
+}

@@ -1,0 +1,14 @@
+.footer-custom {
+    background: #0060c7;
+    height: 130px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 13px;
+    color: white;   
+}
+
+.footer-custom {
+    text-align: right;
+}

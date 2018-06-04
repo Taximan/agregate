@@ -1,0 +1,7 @@
+.no-such-page-wrapper {
+    display: flex;
+    height: 50vh;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,56 @@
+.submission-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.submission-wrapper > .submission-vote-bar {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 60px;
+    padding-left: 1.35rem;
+}
+
+@media only screen and (max-width: 576px) {
+    .submission-wrapper > .submission-vote-bar {
+        flex-flow: row nowrap !important;
+        justify-content: flex-start;
+        padding: 10px 0 10px 1.35rem;
+    }
+    .submission-wrapper {
+        flex-flow: column nowrap;
+    }
+    .submission-wrapper .card-body {
+        padding-top: 0;
+    }
+}
+
+.submission-wrapper .submission-vote-bar .submission-vote-icon {
+    font-size: 2.4rem;
+    cursor: pointer;
+}
+
+.submission-wrapper .submission-vote-bar .submission-downvote-btn.active {
+    color: #007bff;
+}
+
+.submission-wrapper .submission-vote-bar .submission-upvote-btn.active {
+    color: #dc3545;
+}
+
+.submission-wrapper .submission-actions {
+    display: flex;
+}
+
+.submission-wrapper .submission-actions > .submission-action {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.submission-wrapper .submission-actions > .submission-action i {
+    margin-right: 3px;
+}
