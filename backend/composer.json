@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Agregate\\": "./Agregate"
+        }
+    },
+    "name": "dawid/backend",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dawid Czarnik",
+            "email": "dawidczarnik@outlook.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^5.0",
+        "vlucas/spot2": "~2.0"
+    }
+}
