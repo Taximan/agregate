@@ -11,6 +11,14 @@ class Auth
 {
     public static $JWT_SIGNING_KEY = "a4eed4a5";
 
+    /**
+     * @return boolean
+     */
+    public static function isLoggedIn()
+    {
+        return isset($_SERVER['HTTP_AUTHORIZATION']);
+    }
+
     public static function getUserClaim()
     {
         $rawToken = $_SERVER['HTTP_AUTHORIZATION'];

@@ -41,10 +41,27 @@ class DB
     }
 
     /**
-     * @return \Spot\Mapper 
+     * @return \Spot\Mapper
      */
-    public function userMapper() {
+    public function userMapper()
+    {
         return $this->locator->mapper('Agregate\Entity\User');
+    }
+
+    /**
+     * @return \Spot\Mapper
+     */
+    public function submissionMapper()
+    {
+        return $this->locator->mapper('Agregate\Entity\Submission');
+    }
+
+    /**
+     * @return \Spot\Mapper
+     */
+    public function voteMapper()
+    {
+        return $this->locator->mapper('Agregate\Entity\Vote');
     }
 
 }
