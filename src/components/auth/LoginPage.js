@@ -36,14 +36,16 @@ class LoginPage extends Component {
 
     render() {
         const { session } = this.props;
-        const { isFetching } = session;
+        const { isFetching, lastLoginErrorMessage } = session;
 
         return (
             <div className="login-page-wrapper">
+                {lastLoginErrorMessage && <div className="alert alert-warning" role="alert">
+                    {lastLoginErrorMessage}
+                </div>}
                 <div className="alert alert-secondary" role="alert">
                     <strong>Brak konta?</strong> Utwórz je <Link to="/auth/register">tutaj</Link>.
                 </div>
-
                 <Formik
                     initialValues={{ username: '', pass: '' }}
                     onSubmit={this.handleFormSubmit}

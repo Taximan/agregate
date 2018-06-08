@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Formik } from 'formik';
 import { FormTextInput } from '../form/FormikBindings';
 import './register.css';
 import * as  yup from 'yup';
+import Axios from 'axios';
 
 const schema = yup.object({
     username: yup.string()
@@ -22,16 +24,38 @@ const schema = yup.object({
 
 const initialFormValues = { username: '', pass: '', passConfirm: '' };
 
-export default class RegisterPage extends Component {
+class RegisterPage extends Component {
+    state = { errorMsg: null };
 
     handleFormSubmit = (values, actions) => {
-        console.log(values, actions);
+        Axios
+            .post('/Agregate/Api/Auth/Register.php', {
+                username: values.username,
+                password: values.pass
+            })
+            .then(resp => {
+                this.setState({ errorMsg: null });
+            })
+            .catch(ex => {
+                if (ex.response && ex.response.code === 409) {
+                    this.setState({ errorMsg: 'Nazwa użytkownika zajęta' });
+                } else {
+                    this.setState({ errorMsg: 'Nieoczekiwany błąd w czasie rejstracji' });
+                }
+            })
     }
 
     render() {
+
+        const { errorMsg } = this.state;
+
         return (
             <div className="register-page-wrapper">
                 <h2>Dołącz do Aggregate</h2>
+
+                {errorMsg && <div className="alert alert-warning" role="alert">
+                    {errorMsg}
+                </div>}
 
                 <Formik
                     initialValues={initialFormValues}
@@ -51,3 +75,5 @@ export default class RegisterPage extends Component {
         )
     }
 }
+
+export default withRouter(RegisterPage);
