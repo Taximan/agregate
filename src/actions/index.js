@@ -20,7 +20,8 @@ export const login = ({ username, password }) => dispatch => {
             dispatch(loginSuccess({ id, username }));
         })
         .catch(ex => {
-            if (ex.response && ex.response.code === 401) {
+            console.log('exception while logging in', ex);
+            if (ex.response && ex.response.status === 401) {
                 dispatch(loginFailure('Nieprawidłowa nazwa użytkownika lub hasło'));
             } else {
                 dispatch(loginFailure('Nieoczekiwany błąd'));

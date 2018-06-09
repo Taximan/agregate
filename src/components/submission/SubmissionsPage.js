@@ -5,12 +5,23 @@ import { connect } from 'react-redux';
 import { getLoggedIn } from '../../reducers';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
+import { createCanvasElement } from './Bang';
+
 
 class SubmissionsPage extends Component {
     state = {
         submissions: [],
         errorMsg: null,
         isFetching: true
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.bangMount = null;
+        this.setBangMount = element => {
+            this.bangMount = element;
+        };
     }
 
     async componentDidMount() {
@@ -21,6 +32,16 @@ class SubmissionsPage extends Component {
             this.setState({ errorMsg: 'Nie udało się pobrać linków!', isFetching: false });
             console.log(ex);
         }
+        this.refs.bang.appendChild(createCanvasElement());
+        this.list = window.addEventListener("resize", () => {
+            console.log(this.bangMount);
+            this.refs.bang.innerHTML = '';
+            this.refs.bang.appendChild(createCanvasElement());
+        })
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener(this.list);
     }
 
     redirectUnloggedUser = () => {
@@ -77,6 +98,8 @@ class SubmissionsPage extends Component {
                 {errorMsg && <div className="alert alert-warning" role="alert">
                     {errorMsg}
                 </div>}
+                <div ref="bang">
+                </div>
                 {submissions.map(sub => (
                     <Submission
                         key={sub.id}

@@ -25,6 +25,13 @@ const store = createStore(
     )
 );
 
+
+if (process && process.env && process.env.NODE_ENV !== 'production') {
+    Axios.defaults.baseURL = 'http://localhost:3000';
+} else {
+    Axios.defaults.baseURL = 'http://ux.up.krakow.pl/~dczarnik';
+}
+
 const index = (
     <Provider store={store}>
         <HashRouter>
@@ -38,6 +45,6 @@ const index = (
 
 if (window.localStorage.getItem('__token') != null) {
     Axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('__token');
-} 
+}
 ReactDOM.render(index, document.getElementById('root'));
 registerServiceWorker();
