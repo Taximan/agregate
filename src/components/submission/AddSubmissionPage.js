@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import { FormTextInput, FormTextArea } from '../form/FormikBindings';
 import * as yup from 'yup';
 
+// eslint-disable-next-line
 const urlRegex = /^[a-zA-Z0-9]+\:\/\/[a-zA-Z0-9]+\.[-a-zA-Z0-9]+\.?[a-zA-Z0-9]+$|^[a-zA-Z0-9]+\.[-a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
 const schema = yup.object({
