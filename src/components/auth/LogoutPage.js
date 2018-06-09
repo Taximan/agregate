@@ -15,7 +15,9 @@ class LogoutPage extends Component {
 
     async componentDidMount() {
         if (this.props.isLoggedIn) {
-            this.props.dispatch(logout());
+            setTimeout(() => {
+                this.props.dispatch(logout());
+            }, 250);
         } else {
             this.props.history.push('/');
         }

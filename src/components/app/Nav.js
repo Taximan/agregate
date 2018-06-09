@@ -11,15 +11,25 @@ class Nav extends Component {
         this.props.history.push('/auth/logout');
     }
 
+    handleOpenAddSubmissionFormRequest = () => {
+        this.props.history.push('/add-submisson');
+    }
+
     render() {
-        const { isLoggedIn } = this.props;
+        const { isLoggedIn, session } = this.props;
         const authButton = this.renderAuthButton(isLoggedIn);
+        const userString = session && session.user && `/${session.user.username}`;
 
         return (
             <nav className="navbar navbar-light bg-light">
-                <Link className="navbar-brand" to="/">Aggregate</Link>
+                <Link className="navbar-brand" to="/">Aggregate{userString}</Link>
                 <ul className="navbar-nav navbar-items-container-custom">
-                    <li className="nav-item active">
+                    {isLoggedIn && <li className="nav-item">
+                        <button className="btn btn-success" onClick={this.handleOpenAddSubmissionFormRequest}>
+                            Dodaj
+                        </button>
+                    </li>}
+                    <li className="nav-item">
                         {authButton}
                     </li>
                 </ul>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './submission.css';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom'
 
 const VOTE_BUTTON_SHARED_CLASSES = ['material-icons', 'submission-vote-icon'];
 const UP_VOTE_BUTTON_BASE_CLASSES = VOTE_BUTTON_SHARED_CLASSES.concat('submission-upvote-btn');
@@ -42,7 +43,7 @@ class Submission extends React.Component {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <h6 className="card-subtitle mb-2 text-muted">
-                        {createdAt.toLocaleDateString()}, przez <a href="LOL">{name}</a>
+                        {createdAt.toLocaleString()}, przez <Link to="/">{name}</Link>
                     </h6>
                     <p className="card-text">{description}</p>
                     <div className="submission-actions">

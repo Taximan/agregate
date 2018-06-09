@@ -54,3 +54,8 @@
 .submission-wrapper .submission-actions > .submission-action i {
     margin-right: 3px;
 }
+
+.add-submission-page-wrapper {
+    min-height: 50vh;
+    padding: 10px;
+}

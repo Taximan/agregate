@@ -35,6 +35,7 @@ class RegisterPage extends Component {
             })
             .then(resp => {
                 this.setState({ errorMsg: null });
+                this.props.history.push('/auth/login');
             })
             .catch(ex => {
                 if (ex.response && ex.response.code === 409) {

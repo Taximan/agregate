@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { session } from './reducers'
 import thunk from 'redux-thunk';
+import Axios from 'axios';
 
 const reducer = combineReducers({
     session,
@@ -35,6 +36,8 @@ const index = (
     </Provider>
 )
 
+if (window.localStorage.getItem('__token') != null) {
+    Axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('__token');
+} 
 ReactDOM.render(index, document.getElementById('root'));
-
 registerServiceWorker();

@@ -57,8 +57,7 @@ class LoginPage extends Component {
                             <input 
                                 className="btn btn-primary"
                                 type="submit"
-                                value="Zaloguj
-                                sie!"
+                                value="Zaloguj sie!"
                                 disabled={isFetching}
                              />
                         </form>

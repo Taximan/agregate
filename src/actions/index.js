@@ -15,6 +15,8 @@ export const login = ({ username, password }) => dispatch => {
             const id = resp.data['id'];
             const username = resp.data['username'];
             Axios.defaults.headers.common['Authorization'] = token;
+            window.localStorage.setItem('__user', JSON.stringify({ username, id }));
+            window.localStorage.setItem('__token', token);
             dispatch(loginSuccess({ id, username }));
         })
         .catch(ex => {
@@ -23,12 +25,14 @@ export const login = ({ username, password }) => dispatch => {
             } else {
                 dispatch(loginFailure('Nieoczekiwany błąd'));
             }
-        })
+        });
 }
 
-export const logout = () => dispatch => {
-    Axios.defaults.headers.common['Authorization'] = null;
-    dispatch({ type: LOGOUT_REQUEST });
+export const logout = () => {
+    delete Axios.defaults.headers.common['Authorization'];
+    window.localStorage.removeItem('__token');
+    window.localStorage.removeItem('__user');
+    return { type: LOGOUT_REQUEST };
 }
 
 const loginInit = () => ({
@@ -39,12 +43,12 @@ const loginSuccess = ({
     username,
     id
 }) => ({
-    type: 'LOGIN_SUCCESS',
-    payload: {
-        username,
-        id
-    }
-});
+        type: 'LOGIN_SUCCESS',
+        payload: {
+            username,
+            id
+        }
+    });
 
 const loginFailure = (errorReasonText) => ({
     type: LOGIN_FAILURE,

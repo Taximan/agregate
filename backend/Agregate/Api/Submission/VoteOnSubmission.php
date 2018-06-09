@@ -24,7 +24,7 @@ if (\is_bool($req['vote'])) {
 
 $submission_id = $req['submissionId'];
 
-$voteObj = $voteMapper->where(['submission_id' => $submission_id])->first();
+$voteObj = $voteMapper->where(['submission_id' => $submission_id, 'user_id' => $userId])->first();
 
 if ($voteObj) {
     $voteObj->vote = $vote;

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getLoggedIn } from '../../reducers';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
-import { sleep } from '../../lib/util';
 
 class SubmissionsPage extends Component {
     state = {
@@ -16,7 +15,6 @@ class SubmissionsPage extends Component {
 
     async componentDidMount() {
         try {
-            await sleep(500);
             const resp = await Axios.get('Agregate/Api/Submission/ListSubmissions.php')
             this.setState({ isFetching: false, submissions: resp.data });
         } catch (ex) {
@@ -25,31 +23,50 @@ class SubmissionsPage extends Component {
         }
     }
 
-    redirectIfNotLoggedIn = () => {
-        if (!this.props.isLoggedIn) {
-            this.props.history.push('/auth/login');
+    redirectUnloggedUser = () => {
+        this.props.history.push('/auth/login');
+    }
+
+    vote = async (vote, submissionId) => {
+        try {
+            await Axios.post('/Agregate/Api/Submission/VoteOnSubmission.php', {
+                submissionId,
+                vote
+            });
+        } catch (ex) {
+            console.log(ex);
         }
     }
 
     handleSubmissionUpvote = (submissionId) => {
-        this.redirectIfNotLoggedIn();
-        console.log('upvote btn has been pressed', submissionId);
+        if (this.props.isLoggedIn) {
+            this.vote(true, submissionId);
+        } else {
+            this.redirectUnloggedUser();
+        }
     }
 
     handleSubmissionDownVote = (submissionId) => {
-        this.redirectIfNotLoggedIn();
-        console.log('downvote pbnt pressed', submissionId);
+        if (this.props.isLoggedIn) {
+            this.vote(false, submissionId);
+        } else {
+            this.redirectUnloggedUser();
+        }
     }
 
     handleVoteCancelation = (submissionId) => {
-        this.redirectIfNotLoggedIn();
-        console.log('vote to be cancelled', submissionId);
+        if (this.props.isLoggedIn) {
+            this.vote(null, submissionId);
+        } else {
+            this.redirectUnloggedUser();
+        }
     }
 
     render() {
         const {
             errorMsg,
-            isFetching
+            isFetching,
+            submissions
         } = this.state;
 
         return (
@@ -60,19 +77,22 @@ class SubmissionsPage extends Component {
                 {errorMsg && <div className="alert alert-warning" role="alert">
                     {errorMsg}
                 </div>}
-                <Submission
-                    id={3}
-                    userVote={-1}
-                    rating={13}
-                    createdAt={new Date()}
-                    user={{ name: 'dawid' }}
-                    title="Jakaś tam sobie wyszukiwarka"
-                    description="Ayoo"
-                    url="http://google.pl"
-                    onCancelVote={this.handleVoteCancelation}
-                    onUpVote={this.handleSubmissionUpvote}
-                    onDownVote={this.handleSubmissionDownVote}
-                />
+                {submissions.map(sub => (
+                    <Submission
+                        key={sub.id}
+                        id={sub.id}
+                        userVote={sub.userVote}
+                        rating={sub.rating}
+                        createdAt={new Date(sub.createdAt)}
+                        user={sub.user}
+                        title={sub.title}
+                        description={sub.description}
+                        url={sub.url}
+                        onCancelVote={this.handleVoteCancelation}
+                        onUpVote={this.handleSubmissionUpvote}
+                        onDownVote={this.handleSubmissionDownVote}
+                    />
+                ))}
             </div>
         );
     }

@@ -3,13 +3,13 @@ import { LOGIN_INIT, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_REQUEST } from "../act
 const initialState = {
     isFetching: false,
     lastLoginErrorMessage: null,
-    user: null
+    user: JSON.parse(window.localStorage.getItem('__user')) || null
 }
 
 export const session = (state = initialState, action) => {
     switch (action.type) {
         case LOGOUT_REQUEST:
-            return initialState;
+            return { ...state, user: null };
         case LOGIN_INIT:
             return { ...state, isFetching: true };
         case LOGIN_FAILURE:
